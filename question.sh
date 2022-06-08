@@ -41,3 +41,17 @@
 #
 #  >>> Escriba su codigo a partir de este punto <<<
 #
+#! /usr/bin/env bash
+filename=$1
+sed 's/^\([0-9]\)\//0\1\//' $filename \
+|sed 's/\/\([0-9]\)\//\/0\1\//' \
+|sed 's/\/\([0-9][0-9]\)\([0-9][0-9]\);/\/\2;/' \
+|sed 's/^\([0-9]*\)\/\([0-9]*\)\/\([0-9]*\);/20\3-\2-\1;/' \
+|sed 's/,/./' \
+|sed 's/;N;/;\\N;/' \
+|sed 's/;\\n;/;\\N;/' \
+|sed 'y/abc/ABC/' \
+|sed 's/;;/;\\N;/' \
+|sed 's/;n/;\\N/' \
+|sed 's/\(;\)\s*$/\1\\N/' \
+|sed 's/;/,/g' > output.csv
